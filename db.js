@@ -1,7 +1,7 @@
 const { Client } = require('pg');
 
 const h=process.env.host;
-const p=process.env.port;
+const p=process.env.dbport;
 const db=process.env.database;
 const us=process.env.user;
 const ps=process.env.password;
