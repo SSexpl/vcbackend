@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 const client = require('./db');// the database is connected now we can use the inside otps
 // for checking the email is valid or not
-
+const port=process.env.PORT||5000;
 // function to get info from req. header
 function authenticateToken(req, res, next) {
   // Retrieve the token from the Authorization header
