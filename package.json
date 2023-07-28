@@ -11,4 +11,8 @@
     "otp-generator": "^4.0.1",
     "pg": "^8.11.0"
   }
+  "scripts": {
+    "start": "node app.js" // Replace "app.js" with your entry point file
+  },
+  //added start script
 }
