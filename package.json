@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node app.js" 
+  },
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
     "body-parser": "^1.20.2",
@@ -10,9 +13,6 @@
     "nodemon": "^2.0.22",
     "otp-generator": "^4.0.1",
     "pg": "^8.11.0"
-  },
-  "scripts": {
-    "start": "node app.js" 
-  },
+  }  
   
 }
