@@ -10,7 +10,7 @@
     "nodemon": "^2.0.22",
     "otp-generator": "^4.0.1",
     "pg": "^8.11.0"
-  }
+  },
   "scripts": {
     "start": "node app.js" 
   },
