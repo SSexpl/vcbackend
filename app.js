@@ -23,7 +23,7 @@ const utils=require('./utility/auth');
 const authenticateToken=utils.authenticateToken;
 const checkToken=utils.checkToken;
 const StaffauthenticateToken=utils.StaffauthenticateToken;
-
+const port=3000||process.env.PORT;
 const staff=require('./router/staff');
 const user=require('./router/user');
 app.use('/user',user);
