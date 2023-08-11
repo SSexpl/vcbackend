@@ -58,7 +58,7 @@ router.post('/check-email', async (req, res) => {
       const { email } = req.body;
   
       // Generate OTP
-      const otp = otpGenerator.generate(6, { upperCase: false, lowerCase : false , specialChars: false ,digits:true });
+      const otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false,lowerCaseAlphabets:false,digits:true });
   
       // Save OTP and email to the database
       const query1 = 'SELECT EXISTS(SELECT 1 FROM otps WHERE email = $1)';
