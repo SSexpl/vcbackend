@@ -4,6 +4,9 @@ const router = express.Router();
 const otpGenerator = require('otp-generator');
 const nodemailer = require('nodemailer');  
 const sgMail = require('@sendgrid/mail');
+
+const jwt=require('jsonwebtoken');
+const JwtKey=process.env.JwtKey;
 //the utility check functions
 const utils=require('../utility/auth');
 const authenticateToken=utils.authenticateToken;
@@ -55,7 +58,7 @@ router.post('/check-email', async (req, res) => {
       const { email } = req.body;
   
       // Generate OTP
-      const otp = otpGenerator.generate(6, { upperCase: false, specialChars: false });
+      const otp = otpGenerator.generate(6, { upperCase: false, lowerCase : false , specialChars: false ,digits:true });
   
       // Save OTP and email to the database
       const query1 = 'SELECT EXISTS(SELECT 1 FROM otps WHERE email = $1)';
