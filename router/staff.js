@@ -7,7 +7,7 @@ const JwtKey=process.env.JwtKey;
 const StaffauthenticateToken=utils.StaffauthenticateToken;
 const checkToken=utils.checkToken;
 const client = require('../db');
-router.get('/staff',StaffauthenticateToken,async(req,res)=>
+router.get('/',StaffauthenticateToken,async(req,res)=>
 {
   console.log("hit");
    const id=req.id;
