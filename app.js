@@ -1,3 +1,6 @@
+const express=require('express');
+require('dotenv').config();
+const otpGenerator = require('otp-generator');
 const nodemailer = require('nodemailer');  
 const sgMail = require('@sendgrid/mail');
 const mailer=process.env.MAIL_API;
