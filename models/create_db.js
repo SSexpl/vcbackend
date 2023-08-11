@@ -28,7 +28,8 @@ const createTableQuery=`CREATE TABLE IF NOT EXISTS requests (
   type VARCHAR(50) ,
   date DATE NOT NULL,
   status VARCHAR(20) NOT NULL,
-  verification_code CHAR(6) NOT NULL
+  verification_code CHAR(6) NOT NULL,
+  completed_date DATE
 );`
 // Execute the SQL query to create the table
 client.query(createTableQuery)
