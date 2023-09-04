@@ -63,7 +63,7 @@ router.post('/check-email', async (req, res) => {
       const otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false,lowerCaseAlphabets:false,digits:true });
   
       // Check if this otp is not present in the email..
-      const {hashed_otp}=await hashFunction(otp);
+      const hashed_otp= hashFunction(otp);
       console.log(email+" "+hashed_otp);
       const query1 = 'SELECT EXISTS(SELECT 1 FROM otps WHERE email = $1)';
       const values1 = [email];
@@ -133,7 +133,7 @@ router.post('/check-email', async (req, res) => {
   router.post('/verify-otp', async (req, res) => {
     try {
       const { email, otp } = req.body;
-      const {hashed_otp}=await hashFunction(otp);
+      const hashed_otp=hashFunction(otp);
       // Check if the OTP ,email pair exists in the database
       console.log(email+" "+otp);
       const query = 'SELECT * FROM otps WHERE email = $1 AND otp = $2';

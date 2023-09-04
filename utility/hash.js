@@ -1,18 +1,12 @@
-//this will return the hash of the given text
-const bcrypt = require('bcrypt');
-async function hashFunction(text) {
-    try {
-      // Generate a salt
-      const saltRounds = 10;
-      const salt = await bcrypt.genSalt(saltRounds);
-  
-      // Hash the OTP and email using the generated salt
-      const hashedtxt = await bcrypt.hash(text, salt);
-     console.log(hashedtxt);
-      return ({hashed_otp: hashedtxt}); // Return both hashed OTP and hashed email as "hashedPassword"
-    } catch (error) {
-      throw error;
-    }
-}
+const crypto = require('crypto');
 
+// Define your constant salt (replace with your own value)
+const constantSalt = 'MyConstantSalt';
+
+// Function to hash a string using a constant salt
+ function hashFunction(inputString) {
+  const hash = crypto.createHash('sha256');
+  hash.update(inputString + constantSalt);
+  return hash.digest('hex');
+}
 module.exports={hashFunction};
