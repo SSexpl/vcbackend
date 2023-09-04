@@ -64,7 +64,7 @@ router.post('/check-email', async (req, res) => {
   
       // Check if this otp is not present in the email..
       const {hashed_otp}=await hashFunction(otp);
-      console.log(hashed_otp);
+      console.log(email+" "+hashed_otp);
       const query1 = 'SELECT EXISTS(SELECT 1 FROM otps WHERE email = $1)';
       const values1 = [email];
   
