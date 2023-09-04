@@ -9,7 +9,7 @@ async function hashFunction(text) {
       // Hash the OTP and email using the generated salt
       const hashedtxt = await bcrypt.hash(text, salt);
      console.log(hashedtxt);
-      return { hashedtxt}; // Return both hashed OTP and hashed email as "hashedPassword"
+      return ({hashed_otp: hashedtxt}); // Return both hashed OTP and hashed email as "hashedPassword"
     } catch (error) {
       throw error;
     }
