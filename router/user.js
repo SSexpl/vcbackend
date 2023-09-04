@@ -7,11 +7,13 @@ const sgMail = require('@sendgrid/mail');
 
 const jwt=require('jsonwebtoken');
 const JwtKey=process.env.JwtKey;
-//the utility check functions
+//the utility functions
 const utils=require('../utility/auth');
+const utils_hash=require('../utility/hash')
 const authenticateToken=utils.authenticateToken;
 const checkToken=utils.checkToken;
-
+const hashFunction=utils_hash.hashFunction;
+//-----------mailer
 const mailer=process.env.MAIL_API;
 sgMail.setApiKey(mailer);
 //connector to the db
@@ -60,12 +62,13 @@ router.post('/check-email', async (req, res) => {
       // Generate OTP
       const otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false,lowerCaseAlphabets:false,digits:true });
   
-      // Save OTP and email to the database
+      // Check if this otp is not present in the email..
+      const hashed_otp=await hashFunction(otp).hashedtxt;
       const query1 = 'SELECT EXISTS(SELECT 1 FROM otps WHERE email = $1)';
       const values1 = [email];
   
       const result = await client.query(query1, values1);
-      const isEmailPresent = result.rows[0].exists;
+      const isEmailPresent = result.rows[0].exists; //check if the email is present or not
       //sample response :
       // {
       //   "rows": [
@@ -82,7 +85,7 @@ router.post('/check-email', async (req, res) => {
         const expirationTime = new Date();
         expirationTime.setMinutes(expirationTime.getMinutes() + 4);
       const query = 'INSERT INTO otps (email, otp,expiry_time) VALUES ($1, $2,$3)';
-      const values = [email, otp,expirationTime];
+      const values = [email, hashed_otp,expirationTime];
       await client.query(query, values);
        // Send OTP via email
        const msg = {
@@ -129,7 +132,7 @@ router.post('/check-email', async (req, res) => {
   router.post('/verify-otp', async (req, res) => {
     try {
       const { email, otp } = req.body;
-  
+      const hashed_otp=await hashFunction(otp).hashedtxt;
       // Check if the OTP ,email pair exists in the database
       console.log(email+" "+otp);
       const query = 'SELECT * FROM otps WHERE email = $1 AND otp = $2';
@@ -145,10 +148,10 @@ router.post('/check-email', async (req, res) => {
       //     }
       //   ]
       // }
-      const values = [email, otp];
+      const values = [email, hashed_otp];
       const query2 = 'SELECT * FROM otps WHERE email = $1';
-      const result = await client.query(query, values);
-      const result2 = await client.query(query2, [email]);
+      const result = await client.query(query, values); // to check if the otp is correct or not
+      const result2 = await client.query(query2, [email]); // to check that the email is present or not
       console.log(result.rows);
       console.log(result2.rows);
       const isOTPValid = result.rows.length;
