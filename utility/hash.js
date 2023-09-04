@@ -1,4 +1,5 @@
 //this will return the hash of the given text
+const bcrypt = require('bcrypt');
 async function hashFunction(text) {
     try {
       // Generate a salt
